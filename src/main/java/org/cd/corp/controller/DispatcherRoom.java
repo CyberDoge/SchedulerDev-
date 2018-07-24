@@ -9,7 +9,6 @@ import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class DispatcherRoom {
     private DistributionCenter distributionCenter;
@@ -32,11 +31,10 @@ public class DispatcherRoom {
     }
 
     public void optimizeOrders() {
-        var sorted = orderListToNextDay.stream().sorted(Comparator.comparing((order) ->
-                order.getTimeWindow().getStartingTime())).collect(Collectors.toList());
         optimizedOrderList = new ArrayList<>();
-        distributionCenter.freeResource();
-
+        orderListToNextDay.sort(Comparator.comparing((order) -> order.getTimeWindow().getStartingTime()));
+        var iterator = orderListToNextDay.iterator();
+        iterator.next();
     }
 
     public void addOrder(Order order) {
