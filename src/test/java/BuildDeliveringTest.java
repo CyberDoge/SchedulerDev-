@@ -30,11 +30,9 @@ public class BuildDeliveringTest {
         Order order = new Order(new Coordinates(Math.random(), Math.random()), 100, orderTimeWindow, 20, 10);
         System.out.println("orderTimeWindow: " + orderTimeWindow);
 
-        //traveling time in minutes
-        var travelingTime = Coordinates.countDistance(room.getDistributionCenter().getCoordinates(), order.getCoordinates()) / Resource.getVelocityMetersPerMin();
-        System.out.println("travelingTime = " + travelingTime);
-
-        var delivering = Delivering.createDeliveringSchedule(order.getUploadTime(), order.getUnloadTime(), travelingTime, orderTimeWindow, room.getDistributionCenter().getTimeWindow());
+        var delivering = Delivering.createDeliveringSchedule(order.getUploadTime(), order.getUnloadTime(),
+                Coordinates.countDistance(room.getDistributionCenter().getCoordinates(), order.getCoordinates()),
+                Resource.getVelocityMetersPerMin(), orderTimeWindow, room.getDistributionCenter().getTimeWindow());
         assertNotNull(delivering);
         System.out.println(delivering);
     }

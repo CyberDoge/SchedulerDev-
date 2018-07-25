@@ -16,8 +16,8 @@ public class Delivering {
 
     private TimeWindow centerWorkingTime;
 
-    public static Delivering createDeliveringSchedule(int uploading, int unload, int travelingTime, TimeWindow orderTimeWindow, TimeWindow centerWorkingTime) {
-        //если есть доступные машины
+    public static Delivering createDeliveringSchedule(int uploading, int unload, int distance, int velocity, TimeWindow orderTimeWindow, TimeWindow centerWorkingTime) {
+        var travelingTime = distance / velocity;
         Delivering delivering = new Delivering();
         delivering.centerWorkingTime = centerWorkingTime;
         delivering.startUpload = orderTimeWindow.getStartingTime().minusMinutes(uploading + travelingTime);
@@ -54,6 +54,7 @@ public class Delivering {
     public TimeWindow getCenterWorkingTime() {
         return centerWorkingTime;
     }
+
     @Override
     public String toString() {
         return "Delivering{" +

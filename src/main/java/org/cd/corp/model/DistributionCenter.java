@@ -24,14 +24,6 @@ public class DistributionCenter {
         return fleet;
     }
 
-    public void takeResource() {
-        fleet--;
-    }
-
-    public void freeResource() {
-        fleet++;
-    }
-
     @Override
     public String toString() {
         return "DistributionCenter{" +

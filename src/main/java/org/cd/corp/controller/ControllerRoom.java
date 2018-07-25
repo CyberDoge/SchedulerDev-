@@ -1,19 +1,17 @@
 package org.cd.corp.controller;
 
-import org.cd.corp.model.Coordinates;
-import org.cd.corp.model.DistributionCenter;
-import org.cd.corp.model.Order;
-import org.cd.corp.model.TimeWindow;
+import org.cd.corp.model.*;
 
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.Iterator;
 import java.util.List;
 
 public class ControllerRoom {
     private DistributionCenter distributionCenter;
     private List<Order> orderListToNextDay;
-    private List<Order> optimizedOrderList;
+    private List<Order> unreachedOrders;
 
     public ControllerRoom(Coordinates distributionCenterCoordinates, int startWorkingHour, int startWorkingMin,
                           int endWorkingHour, int endWorkingMin, int fleet) {
@@ -27,6 +25,7 @@ public class ControllerRoom {
         distributionCenter = new DistributionCenter(distributionCenterCoordinates, distributionTimeWindow, fleet);
 
         orderListToNextDay = new ArrayList<>();
+        unreachedOrders = new ArrayList<>();
     }
 
     public DistributionCenter getDistributionCenter() {
@@ -34,14 +33,31 @@ public class ControllerRoom {
     }
 
     public void optimizeOrders() {
-        optimizedOrderList = new ArrayList<>();
         orderListToNextDay.sort(Comparator.comparing((order) -> order.getTimeWindow().getStartingTime()));
-        var iterator = orderListToNextDay.iterator();
-        iterator.next();
+        Iterator<Order> iterator = orderListToNextDay.iterator();
+        while (iterator.hasNext()) {
+            var order = iterator.next();
+            var delivering = Delivering.createDeliveringSchedule(order.getUploadTime(), order.getUnloadTime(),
+                    Coordinates.countDistance(distributionCenter.getCoordinates(), order.getCoordinates()), Resource.getVelocityMetersPerMin(),
+                    order.getTimeWindow(), getDistributionCenter().getTimeWindow());
+            if(delivering==null) {
+                unreachedOrders.add(order);
+                iterator.remove();
+            } else order.setDelivering(delivering);
+        }
+    }
+
+    public List<Order> getOrderListToNextDay() {
+        return orderListToNextDay;
+    }
+
+    public List<Order> getUnreachedOrders() {
+        return unreachedOrders;
     }
 
     public void addOrder(Order order) {
         assert order != null;
+
         orderListToNextDay.add(order);
     }
 

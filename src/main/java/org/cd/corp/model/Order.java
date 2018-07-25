@@ -1,11 +1,14 @@
 package org.cd.corp.model;
 
 public class Order {
+    private static int debugId = 0;
     private Coordinates coordinates;
     private int weight;
     private TimeWindow timeWindow;
     private int uploadTime;
     private int unloadTime;
+    private Delivering delivering;
+    private int personalId;
 
     public Order(Coordinates coordinates, int weight, TimeWindow timeWindow, int uploadTime, int unloadTime) {
         this.coordinates = coordinates;
@@ -13,6 +16,7 @@ public class Order {
         this.timeWindow = timeWindow;
         this.uploadTime = uploadTime;
         this.unloadTime = unloadTime;
+        personalId = debugId++;
     }
 
     public Coordinates getCoordinates() {
@@ -35,14 +39,23 @@ public class Order {
         return unloadTime;
     }
 
+    public Delivering getDelivering() {
+        return delivering;
+    }
+
+    public void setDelivering(Delivering delivering) {
+        this.delivering = delivering;
+
+    }
+
     @Override
     public String toString() {
-        return "Order{" +
+        return personalId + "{" +
                 "coordinates=" + coordinates +
-                ", weight=" + weight +
                 ", timeWindow=" + timeWindow +
                 ", uploadTime=" + uploadTime +
                 ", unloadTime=" + unloadTime +
+                ",delivering=" + delivering +
                 '}';
     }
 }
