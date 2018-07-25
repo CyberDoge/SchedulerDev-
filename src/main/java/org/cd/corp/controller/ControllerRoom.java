@@ -10,24 +10,27 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
-public class DispatcherRoom {
+public class ControllerRoom {
     private DistributionCenter distributionCenter;
     private List<Order> orderListToNextDay;
     private List<Order> optimizedOrderList;
 
-    public DispatcherRoom(double dispatcherLatitude, double dispatcherLongitude, int startMin, int startHour,
-                          int endMin, int endHour, int fleet) {
-        //coordinates
-        var distributionCenterCoordinates = new Coordinates(dispatcherLatitude, dispatcherLongitude);
-        //startTime
-        var distributionStartTime = LocalTime.of(startHour, startMin);
-        //endTime
-        var distributionEndTime = LocalTime.of(endHour, endMin);
+    public ControllerRoom(Coordinates distributionCenterCoordinates, int startWorkingHour, int startWorkingMin,
+                          int endWorkingHour, int endWorkingMin, int fleet) {
+        //start working time
+        var distributionStartTime = LocalTime.of(startWorkingHour, startWorkingMin);
+        //end working time
+        var distributionEndTime = LocalTime.of(endWorkingHour, endWorkingMin);
         //timeWindow
         var distributionTimeWindow = new TimeWindow(distributionStartTime, distributionEndTime);
 
         distributionCenter = new DistributionCenter(distributionCenterCoordinates, distributionTimeWindow, fleet);
+
         orderListToNextDay = new ArrayList<>();
+    }
+
+    public DistributionCenter getDistributionCenter() {
+        return distributionCenter;
     }
 
     public void optimizeOrders() {

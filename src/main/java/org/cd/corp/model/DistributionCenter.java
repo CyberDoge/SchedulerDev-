@@ -31,4 +31,13 @@ public class DistributionCenter {
     public void freeResource() {
         fleet++;
     }
+
+    @Override
+    public String toString() {
+        return "DistributionCenter{" +
+                "coordinates=" + coordinates +
+                ", timeWindow=" + timeWindow +
+                ", fleet=" + fleet +
+                '}';
+    }
 }

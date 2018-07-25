@@ -26,4 +26,12 @@ public class TimeWindow {
     public int getRemainingWorkingTimeInMinutes() {
         return endTime.getMinute() - LocalTime.now().getMinute();
     }
+
+    @Override
+    public String toString() {
+        return "TimeWindow{" +
+                "startingTime=" + startingTime +
+                ", endTime=" + endTime +
+                '}';
+    }
 }

@@ -1,15 +1,13 @@
 package org.cd.corp.model;
 
-import java.time.LocalTime;
-
 public class Order {
     private Coordinates coordinates;
     private int weight;
     private TimeWindow timeWindow;
-    private LocalTime uploadTime;
-    private LocalTime unloadTime;
+    private int uploadTime;
+    private int unloadTime;
 
-    public Order(Coordinates coordinates, int weight, TimeWindow timeWindow, LocalTime uploadTime, LocalTime unloadTime) {
+    public Order(Coordinates coordinates, int weight, TimeWindow timeWindow, int uploadTime, int unloadTime) {
         this.coordinates = coordinates;
         this.weight = weight;
         this.timeWindow = timeWindow;
@@ -29,11 +27,22 @@ public class Order {
         return timeWindow;
     }
 
-    public LocalTime getUploadTime() {
+    public int getUploadTime() {
         return uploadTime;
     }
 
-    public LocalTime getUnloadTime() {
+    public int getUnloadTime() {
         return unloadTime;
+    }
+
+    @Override
+    public String toString() {
+        return "Order{" +
+                "coordinates=" + coordinates +
+                ", weight=" + weight +
+                ", timeWindow=" + timeWindow +
+                ", uploadTime=" + uploadTime +
+                ", unloadTime=" + unloadTime +
+                '}';
     }
 }
