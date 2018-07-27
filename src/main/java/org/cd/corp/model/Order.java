@@ -8,7 +8,6 @@ public class Order {
     private int uploadTime;
     private int unloadTime;
     private Delivering delivering;
-    private int personalId;
 
     public Order(Coordinates coordinates, int weight, TimeWindow timeWindow, int uploadTime, int unloadTime) {
         this.coordinates = coordinates;
@@ -16,7 +15,6 @@ public class Order {
         this.timeWindow = timeWindow;
         this.uploadTime = uploadTime;
         this.unloadTime = unloadTime;
-        personalId = debugId++;
     }
 
     public Coordinates getCoordinates() {
@@ -50,7 +48,7 @@ public class Order {
 
     @Override
     public String toString() {
-        return personalId + "{" +
+        return "Order{" +
                 "coordinates=" + coordinates +
                 ", timeWindow=" + timeWindow +
                 ", uploadTime=" + uploadTime +
